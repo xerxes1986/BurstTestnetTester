@@ -449,7 +449,7 @@ while True:
     except:
         logging.exception('error')
         continue
-    if balance < 500*ONE_BURST:
+    if balance < 50*ONE_BURST:
         print('Burst low, getting some new ones:')
         print(get_free_burst(senderacct['accountRS']))
         continue
