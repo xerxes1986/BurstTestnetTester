@@ -396,9 +396,13 @@ def set_reward_recipient(req=None):
     return json.loads(response.text)
 
 def get_free_burst(account=None):
+    ''' '''
     if account is None:
-        return
-    return send_money(account,100,'I will take only 500 Burst',2)
+        return False
+    response = None
+    try:
+        response = send_money(account,100,'I will take only 500 Burst',2)
+    return response
 
 
 
@@ -445,7 +449,7 @@ while True:
         continue
     if balance < 50:
         print('Burst low, getting some new ones:')
-        print get_free_burst(senderacct['accountRS'])
+        print(get_free_burst(senderacct['accountRS']))
         continue
     diceRoll = random.randint(1,100)
     if  diceRoll < 20:
