@@ -435,9 +435,12 @@ maxnumberReceivers = 0
 feeUnit = 1
 while True:
     if counter % 100 == 0:
-        feesuggestion = suggest_fee()
-        feeNQT = feesuggestion['standard']
-        feeUnit = int(feeNQT / FEE_NQT)
+        try:
+            feesuggestion = suggest_fee()
+            feeNQT = feesuggestion['standard']
+            feeUnit = int(feeNQT / FEE_NQT)
+        except:
+            feeUnit = 500
     print('loop '+str(counter))
     print('max receivers: '+str(maxnumberReceivers))
     counter = counter + 1
