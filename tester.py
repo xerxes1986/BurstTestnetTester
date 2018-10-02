@@ -395,6 +395,11 @@ def set_reward_recipient(req=None):
     response = requests.post(url=BASE_WALLET_PATH, params=req)
     return json.loads(response.text)
 
+def get_free_burst(account=None):
+    if account is None:
+        return
+    return send_money(account,100,'I will take only 500 Burst',2)
+
 
 
 print('Generating Accounts')
@@ -432,6 +437,16 @@ while True:
     counter = counter + 1
     sender = random.randint(1,4096)
     senderacct = accts[sender-1]
+    try:
+        balanceresponse = get_balance(senderacct['accountRS'])
+        balance = int(balanceresponse['guaranteedBalanceNQT'])
+    except:
+        logging.exception('error')
+        continue
+    if balance < 50:
+        print('Burst low, getting some new ones:')
+        print get_free_burst(senderacct['accountRS'])
+        continue
     diceRoll = random.randint(1,100)
     if  diceRoll < 20:
         try:
@@ -440,8 +455,6 @@ while True:
             while sender == receiver:
                 receiver = random.randint(1,4096)
             recacct = accts[receiver-1]
-            balanceresponse = get_balance(senderacct['accountRS'])
-            balance = int(balanceresponse['guaranteedBalanceNQT'])
             amountToSend = random.randint(FEE_NQT,int(0.2*balance))
             amountInBurst = str(amountToSend / ONE_BURST)
             print(str(sender)+' sends '+amountInBurst+' Burst to '+str(receiver))
