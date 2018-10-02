@@ -421,7 +421,12 @@ counter = 0
 totalfee = 0 
 groupTotal = 10
 maxnumberReceivers = 0
+feeUnit = 1
 while True:
+    if counter % 100 == 0:
+        feesuggestion = suggest_fee()
+        feeNQT = feesuggestion['standard']
+        feeUnit = int(feeNQT / FEE_NQT)
     print('loop '+str(counter))
     print('max receivers: '+str(maxnumberReceivers))
     counter = counter + 1
@@ -442,7 +447,7 @@ while True:
             print(str(sender)+' sends '+amountInBurst+' Burst to '+str(receiver))
             sendreceipt = send_money(recacct['accountRS'],
                                      amountToSend,'test'+str(sender),
-                                     groupTotal*FEE_NQT,None,recacct['publicKey'])
+                                     random.randint(1,feeUnit)*FEE_NQT,None,recacct['publicKey'])
             tx = sendreceipt['transactionJSON']
             print('Broadcasted: '+str(sendreceipt['broadcasted']))
             fee = int(tx['feeNQT'])/ONE_BURST
@@ -472,7 +477,7 @@ while True:
                 totalToSend = totalToSend + randAmt
             amountInBurst = str(totalToSend / ONE_BURST)
             print(str(sender)+' sends '+amountInBurst+' total Burst to '+str(numReceivers)+' recipients multi_out')
-            sendreceipt = send_money_multi(receivers,amounts,'test'+str(sender),groupTotal*FEE_NQT)
+            sendreceipt = send_money_multi(receivers,amounts,'test'+str(sender),random.randint(1,feeUnit)*FEE_NQT)
             tx = sendreceipt['transactionJSON']
             print('Broadcasted: '+str(sendreceipt['broadcasted']))
             fee = int(tx['feeNQT'])/ONE_BURST
@@ -503,7 +508,7 @@ while True:
             print(str(sender)+' sends '+str(randAmt)+' Burst to '+str(numReceivers)+' recipients multi_out_same')
             sendreceipt = send_money_multi_same(receivers,randAmt,
                                                 'test'+str(sender),
-                                                groupTotal*FEE_NQT)
+                                                random.randint(1,feeUnit)*FEE_NQT)
             tx = sendreceipt['transactionJSON']
             print('Broadcasted: '+str(sendreceipt['broadcasted']))
             fee = int(tx['feeNQT'])/ONE_BURST
@@ -517,6 +522,6 @@ while True:
             print(sendreceipt)
 
     
-    time.sleep(3)
-    if groupTotal == 1096:
+    time.sleep(1)
+    if groupTotal == 100:
         groupTotal = 1
