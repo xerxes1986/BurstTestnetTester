@@ -402,7 +402,9 @@ def get_free_burst(account=None):
     response = None
     try:
         response = send_money(account,100,'I will take only 500 Burst',2)
-    return response
+    except:
+        response = False
+    return response.text
 
 
 
