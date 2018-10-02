@@ -13,4 +13,4 @@ In order to run: ('sudo' parts are required on Amazon EC2 (free micro-instances!
 4) Install requests: sudo /usr/bin/pip-3.6 install requests
 5) Run the tool: cd BurstTestnetTester-master; python36 tester.py
 
-
+QuickSetup (Copy+Paste into EC2 after logging in): wget https://github.com/xerxes1986/BurstTestnetTester/archive/master.zip; unzip master.zip; sudo yum install python36; sudo /usr/bin/pip-3.6 install requests; cd BurstTestnetTester-master; python36 tester.py
